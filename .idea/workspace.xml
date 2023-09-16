@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8ea20e4-ab89-424a-a23b-56f96ba4d0bd" name="Changes" comment="Update .gitignore, partial adaptation to various sprites and languages, META-INF">
+    <list default="true" id="b8ea20e4-ab89-424a-a23b-56f96ba4d0bd" name="Changes" comment="maven-build.yml">
       <change beforePath="$PROJECT_DIR$/.github/workflows/maven-build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/maven-build.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +39,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "last_opened_file_path": "F:/Projects/JavaProjects/SpriteEditorFX",
     "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
+    "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "preferences.JavaFX"
   }
@@ -50,7 +52,20 @@
       <recent name="F:\Projects\JavaProjects\SpriteEditorFX\src\main\resources\com\example\spriteeditorfx" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.spriteeditorfx.Main" />
+      <module name="SpriteEditorFX" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.spriteeditorfx.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="SpriteEditorApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.spriteeditorfx.SpriteEditorApplication" />
       <module name="SpriteEditorFX" />
@@ -66,6 +81,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.SpriteEditorApplication" />
       </list>
     </recent_temporary>
@@ -89,13 +105,21 @@
       <option name="project" value="LOCAL" />
       <updated>1694876990189</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="maven-build.yml">
+      <created>1694877526669</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1694877526669</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Init" />
     <MESSAGE value="Update .gitignore, partial adaptation to various sprites and languages, META-INF" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update .gitignore, partial adaptation to various sprites and languages, META-INF" />
+    <MESSAGE value="maven-build.yml" />
+    <option name="LAST_COMMIT_MESSAGE" value="maven-build.yml" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
