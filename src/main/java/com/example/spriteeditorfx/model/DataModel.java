@@ -1,11 +1,14 @@
-package com.example.spriteeditorfx;
+package com.example.spriteeditorfx.model;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.image.Image;
 
 public class DataModel {
+
+    private Image spriteImage;
     private IntegerProperty id;
     private StringProperty russianName;
     private StringProperty englishName;
@@ -27,6 +30,14 @@ public class DataModel {
 
     public DataModel() {
 
+    }
+
+    public Image getSpriteImage() {
+        return spriteImage;
+    }
+
+    public void setSpriteImage(Image spriteImage) {
+        this.spriteImage = spriteImage;
     }
 
     public int getId() {

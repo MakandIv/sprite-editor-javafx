@@ -11,17 +11,18 @@
 <VBox alignment="TOP_CENTER" prefHeight="781.0" prefWidth="1177.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.spriteeditorfx.SpriteEditorController">
    <HBox alignment="CENTER">
       <VBox.margin>
-         <Insets bottom="15.0" top="15.0"/>
+         <Insets bottom="15.0" top="15.0" />
       </VBox.margin>
       <Button fx:id="saveButton" mnemonicParsing="false" text="Save" textAlignment="CENTER">
          <HBox.margin>
-            <Insets left="15.0" right="15.0"/>
+            <Insets left="15.0" right="15.0" />
          </HBox.margin>
       </Button>
-      <ToggleButton fx:id="sectionEditorButton" mnemonicParsing="false" text="Section Editor" textAlignment="CENTER"/>
+      <ToggleButton fx:id="sectionEditorButton" mnemonicParsing="false" text="Section Editor" textAlignment="CENTER" />
    </HBox>
    <TableView fx:id="tableView" prefHeight="726.0" prefWidth="2074.0">
       <columns>
+         <TableColumn fx:id="spriteImage" prefWidth="75.0" text="Sprite" />
          <TableColumn fx:id="russianNameColumn" prefWidth="341.0" text="Russian Name" />
          <TableColumn fx:id="englishNameColumn" editable="false" minWidth="0.0" prefWidth="339.0" text="English Name" />
          <TableColumn fx:id="position" editable="false" text="Position" />

@@ -4,8 +4,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.json.simple.JSONObject;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -14,80 +16,92 @@ import static com.example.spriteeditorfx.SpriteParser.*;
 
 public class SpriteEditorApplication extends Application {
 
-    private static String ruData;
-    private static String enData;
-    private static List<Map<String, String>> sectionsRU;
-    private static List<Map<String, String>> sectionsEN;
-    private static List<Map<String, String>> spritesRU;
-    private static List<Map<String, String>> spritesEN;
-    private static String settingsRU;
+    private static String targetData;
+    private static String sourceData;
+    private static List<Map<String, String>> sectionsTarget;
+    private static List<Map<String, String>> sectionsSource;
+    private static List<Map<String, String>> spritesTarget;
+    private static List<Map<String, String>> spritesSource;
+    private static String settingsTarget;
 
-    public static String getSettingsRU() {
-        return settingsRU;
+    public static String getSettingsTarget() {
+        return settingsTarget;
     }
 
-    public static void setSettingsRU(String settingsRU) {
-        SpriteEditorApplication.settingsRU = settingsRU;
+    public static void setSettingsTarget(String settingsRU) {
+        SpriteEditorApplication.settingsTarget = settingsRU;
     }
 
-    public static String getRuData() {
-        return ruData;
+    public static String getTargetData() {
+        return targetData;
     }
 
-    public static void setRuData(String ruData) {
-        SpriteEditorApplication.ruData = ruData;
+    public static void setTargetData(String ruData) {
+        SpriteEditorApplication.targetData = ruData;
     }
 
-    public static String getEnData() {
-        return enData;
+    public static String getSourceData() {
+        return sourceData;
     }
 
-    public static void setEnData(String enData) {
-        SpriteEditorApplication.enData = enData;
+    public static void setSourceData(String enData) {
+        SpriteEditorApplication.sourceData = enData;
     }
 
-    public static List<Map<String, String>> getSectionsRU() {
-        return sectionsRU;
+    public static List<Map<String, String>> getSectionsTarget() {
+        return sectionsTarget;
     }
 
-    public static void setSectionsRU(List<Map<String, String>> sectionsRU) {
-        SpriteEditorApplication.sectionsRU = sectionsRU;
+    public static void setSectionsTarget(List<Map<String, String>> sectionsRU) {
+        SpriteEditorApplication.sectionsTarget = sectionsRU;
     }
 
-    public static List<Map<String, String>> getSectionsEN() {
-        return sectionsEN;
+    public static List<Map<String, String>> getSectionsSource() {
+        return sectionsSource;
     }
 
-    public static void setSectionsEN(List<Map<String, String>> sectionsEN) {
-        SpriteEditorApplication.sectionsEN = sectionsEN;
+    public static void setSectionsSource(List<Map<String, String>> sectionsEN) {
+        SpriteEditorApplication.sectionsSource = sectionsEN;
     }
 
-    public static List<Map<String, String>> getSpritesRU() {
-        return spritesRU;
+    public static List<Map<String, String>> getSpritesTarget() {
+        return spritesTarget;
     }
 
-    public static void setSpritesRU(List<Map<String, String>> spritesRU) {
-        SpriteEditorApplication.spritesRU = spritesRU;
+    public static void setSpritesTarget(List<Map<String, String>> spritesRU) {
+        SpriteEditorApplication.spritesTarget = spritesRU;
     }
 
-    public static List<Map<String, String>> getSpritesEN() {
-        return spritesEN;
+    public static List<Map<String, String>> getSpritesSource() {
+        return spritesSource;
     }
 
-    public static void setSpritesEN(List<Map<String, String>> spritesEN) {
-        SpriteEditorApplication.spritesEN = spritesEN;
+    public static void setSpritesSource(List<Map<String, String>> spritesEN) {
+        SpriteEditorApplication.spritesSource = spritesEN;
     }
 
 
     @Override
     public void init() throws Exception {
-        setRuData(getDataInvSprite(INV_SPRITE_RU.get("lang"), INV_SPRITE_RU.get("pageName")));
-        setEnData(getDataInvSprite(INV_SPRITE_EN.get("lang"), INV_SPRITE_EN.get("pageName")));
-        setSettingsRU(getSettingsData(Objects.requireNonNull(getRuData())));
-        setSectionsRU(sectionParser(Objects.requireNonNull(getRuData())));
-        setSectionsEN(sectionParser(Objects.requireNonNull(getEnData())));
-        setSpritesRU(spriteParser(getRuData()));
-        setSpritesEN(spriteParser(getEnData()));
+
+        setTargetData(getDataSpriteFile(
+                new URL(INV_SPRITE_TARGET.get("baseURL").toString()
+                        + INV_SPRITE_TARGET.get("name").toString() + "/"
+                        + INV_SPRITE_TARGET.get("suffix").toString()
+                        + INV_SPRITE_TARGET.get("targetPage").toString()
+                        + "?action=raw")));
+
+        setSourceData(getDataSpriteFile(
+                new URL(INV_SPRITE_SOURCE.get("baseURL").toString()
+                        + INV_SPRITE_SOURCE.get("name").toString() + "/"
+                        + INV_SPRITE_SOURCE.get("suffix").toString()
+                        + INV_SPRITE_SOURCE.get("targetPage").toString()
+                        + "?action=raw")));
+        setSettingsTarget(getSettingsData(Objects.requireNonNull(getTargetData()), (JSONObject) INV_SPRITE_TARGET.get("spriteModuleParams")));
+        setSectionsTarget(sectionParser(Objects.requireNonNull(getTargetData()), (JSONObject) INV_SPRITE_TARGET.get("spriteModuleParams")));
+        setSectionsSource(sectionParser(Objects.requireNonNull(getSourceData()), (JSONObject) INV_SPRITE_SOURCE.get("spriteModuleParams")));
+        setSpritesTarget(spriteParser(getTargetData(), (JSONObject) INV_SPRITE_TARGET.get("spriteModuleParams")));
+        setSpritesSource(spriteParser(getSourceData(), (JSONObject) INV_SPRITE_SOURCE.get("spriteModuleParams")));
 
         super.init();
     }

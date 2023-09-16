@@ -1,9 +1,12 @@
 package com.example.spriteeditorfx;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import javax.net.ssl.HttpsURLConnection;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -12,33 +15,59 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SpriteParser {
-    public static final Map<String, String> INV_SPRITE_RU = new HashMap<>();
-    public static final Map<String, String> INV_SPRITE_EN = new HashMap<>();
+
+    public static JSONObject SETTINGS_APPLICATION;
+
     static {
-        INV_SPRITE_RU.put("lang", "ru");
-        INV_SPRITE_RU.put("pageName", URLEncoder.encode("Модуль:ИнвСпрайт", StandardCharsets.UTF_8));
-        INV_SPRITE_EN.put("lang", "en");
-        INV_SPRITE_EN.put("pageName", "Module:InvSprite");
+        try (FileReader fileReader = new FileReader("src/main/resources/spritesEditorConfig.json")) {
+            SETTINGS_APPLICATION = (JSONObject) new JSONParser().parse(fileReader);
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
-    public static List<Map<String, String>> spriteParser(String data) {
+
+    public static JSONObject INV_SPRITE_TARGET;
+    public static JSONObject INV_SPRITE_SOURCE;
+
+    static {
+        for (Object language : (JSONArray) SETTINGS_APPLICATION.get("languages")) {
+            JSONObject langParams = (JSONObject) language;
+            if (langParams.get("name").toString().equals(SETTINGS_APPLICATION.get("target").toString())) {
+                INV_SPRITE_TARGET = langParams;
+                INV_SPRITE_TARGET.put("targetPage", URLEncoder.encode(((JSONObject) langParams.get("spriteModules")).get(SETTINGS_APPLICATION.get("targetPage")).toString(), StandardCharsets.UTF_8));
+            }
+            if (langParams.get("name").toString().equals(SETTINGS_APPLICATION.get("source").toString())) {
+                INV_SPRITE_SOURCE = langParams;
+                INV_SPRITE_SOURCE.put("targetPage", URLEncoder.encode(((JSONObject) langParams.get("spriteModules")).get(SETTINGS_APPLICATION.get("targetPage")).toString(), StandardCharsets.UTF_8));
+            }
+        }
+    }
+
+    public static List<Map<String, String>> spriteParser(String data, JSONObject spriteModuleParams) {
         List<Map<String, String>> spriteMapList = new ArrayList<>();
         String[] dataSplit = data.split("\n");
         boolean spriteFlag = false;
         for (String str : dataSplit) {
-            if (str.contains("['IDы']") || str.contains("ids")) {
+            if (str.contains(spriteModuleParams.get("idsName").toString())) {
                 spriteFlag = true;
                 continue;
             }
             if (spriteFlag) {
                 Map<String, String> spriteMap = new HashMap<>();
-                Pattern spritePattern = Pattern.compile("([^\\t\\[\\]]*?|\\['(.*?)'])\\s*?=\\s*?\\{\\s*?(\\['поз']|pos)\\s*?=\\s*?(\\d*?)\\s*?,\\s*?(section|\\['раздел'])\\s*?=\\s*?(\\d*?)\\s*?(,\\s*?(deprecated|\\['устарел'])\\s*?=\\s*?(true))?\\s*?}\\s*?,");
+                Pattern spritePattern = Pattern.compile("([^\\t\\[\\]]*?|\\['(.*?)'])\\s*?=\\s*?\\{\\s*?"
+                        + spriteModuleParams.get("posName").toString().replace("[", "\\[")
+                        + "\\s*?=\\s*?(\\d*?)\\s*?,\\s*?"
+                        + spriteModuleParams.get("sectionName").toString().replace("[", "\\[")
+                        + "\\s*?=\\s*?(\\d*?)\\s*?(,\\s*?"
+                        + (spriteModuleParams.get("deprecatedName") != null ? spriteModuleParams.get("deprecatedName").toString().replace("[", "\\[") : "deprecated")
+                        + "\\s*?=\\s*?(true))?\\s*?}\\s*?,");
                 Matcher matcher = spritePattern.matcher(str);
 
                 while (matcher.find()) {
-                    String name = (matcher.group(1).contains("[")) ? matcher.group(2) : matcher.group(1);
-                    String pos = matcher.group(4);
-                    String section = matcher.group(6);
-                    String deprecated = matcher.group(9) == null ? "false" : matcher.group(9);
+                    String name = matcher.group(1).contains("[") ? matcher.group(2) :matcher.group(1);
+                    String pos = matcher.group(3);
+                    String section = matcher.group(4);
+                    String deprecated = matcher.group(6) == null ? "false" : matcher.group(6);
                     spriteMap.put("name", name);
                     spriteMap.put("pos", pos);
                     spriteMap.put("section", section);
@@ -50,28 +79,32 @@ public class SpriteParser {
         return spriteMapList;
     }
 
-    public static List<Map<String, String>> sectionParser(String data) {
+    public static List<Map<String, String>> sectionParser(String data, JSONObject spriteModuleParams) {
         List<Map<String, String>> sectionMapList = new ArrayList<>();
         String[] dataSplit = data.split("\n");
         boolean sectionFlag = false;
         for (String str : dataSplit) {
-            if (str.contains("['разделы']") || str.contains("sections")) {
+            if (str.contains(spriteModuleParams.get("sectionsName").toString())) {
                 sectionFlag = true;
                 continue;
             }
-            if (str.contains("['IDы']") || str.contains("ids")) {
+            if (str.contains(spriteModuleParams.get("idsName").toString())) {
                 break;
             }
             if (sectionFlag) {
                 Map<String, String> map = new HashMap<>();
-                Pattern sectionPattern = Pattern.compile("\\{\\s*?(\\['назв']|name)\\s*?=\\s*?'(.*?)'\\s*?,\\s*?(ID|id)\\s*?=\\s*?(\\d*?)\\s*?}\\s*?,");
+                Pattern sectionPattern = Pattern.compile(
+                        "\\{\\s*?"
+                                + spriteModuleParams.get("sectionsNameKey").toString().replace("[", "\\[")
+                                + "\\s*?=\\s*?'(.*?)'\\s*?,\\s*?"
+                                + spriteModuleParams.get("sectionsIDKey").toString().replace("[", "\\[")
+                                + "\\s*?=\\s*?(\\d*?)\\s*?}\\s*?,"
+                );
                 Matcher matcher = sectionPattern.matcher(str);
 
                 while (matcher.find()) {
-                    String name = matcher.group(2);
-                    String id = matcher.group(4);
-                    map.put("name", name);
-                    map.put("id", id);
+                    map.put("name", matcher.group(1));
+                    map.put("id", matcher.group(2));
                     sectionMapList.add(map);
                 }
             }
@@ -79,16 +112,16 @@ public class SpriteParser {
         return sectionMapList;
     }
 
-    public static String getSettingsData(String data) {
+    public static String getSettingsData(String data, JSONObject spriteModuleParams) {
         StringBuilder settings = new StringBuilder();
         String[] dataSplit = data.split("\n");
         boolean settingFlag = false;
         for (String str : dataSplit) {
-            if (str.contains("['настройки']") || str.contains("settings")) {
+            if (str.contains(spriteModuleParams.get("settingsName").toString())) {
                 settingFlag = true;
                 continue;
             }
-            if (str.contains("['разделы']") || str.contains("section")) {
+            if (str.contains(spriteModuleParams.get("sectionsName").toString())) {
                 break;
             }
             if (settingFlag) {
@@ -101,14 +134,9 @@ public class SpriteParser {
         return settings.toString();
     }
 
-    public static String getDataInvSprite(String lang, String pageName) {
-        String baseURL = "https://minecraft.fandom.com/";
-        String langURL = lang.equals("en") ? "" : lang + "/";
-        String wikiURL = "wiki/";
-        String action = "?action=raw";
-
+    public static String getDataSpriteFile(URL url) {
         try {
-            HttpsURLConnection connection = (HttpsURLConnection) new URL(baseURL + langURL + wikiURL + pageName + action).openConnection();
+            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpsURLConnection.HTTP_OK) { // success

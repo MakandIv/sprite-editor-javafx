@@ -1,0 +1,65 @@
+{
+  "source": "en",
+  "target": "ru",
+  "targetPage": "invSprite",
+
+  "languages": [
+    {
+      "name": "en",
+      "baseURL": "https://minecraft.fandom.com/",
+      "suffix": "wiki/",
+      "spriteModules": {
+        "invSprite": "Module:InvSprite",
+        "blockSprite": "Module:BlockSprite"
+      },
+      "spriteModuleParams": {
+        "settingsName": "settings",
+        "sectionsName": "sections",
+        "sectionsNameKey": "name",
+        "sectionsIDKey": "id",
+        "idsName": "ids",
+        "posName": "pos",
+        "sectionName": "section",
+        "deprecatedName": "deprecated"
+      }
+    },
+    {
+      "name": "ru",
+      "baseURL": "https://minecraft.fandom.com/",
+      "suffix": "wiki/",
+      "spriteModules": {
+        "invSprite": "Модуль:ИнвСпрайт",
+        "blockSprite": "Модуль:Спрайт/Блок"
+      },
+      "spriteModuleParams": {
+        "settingsName": "['настройки']",
+        "sectionsName": "['разделы']",
+        "sectionsNameKey": "['назв']",
+        "sectionsIDKey": "ID",
+        "idsName": "['IDы']",
+        "posName": "['поз']",
+        "sectionName": "['раздел']",
+        "deprecatedName": "['устарел']"
+      }
+    },
+    {
+      "name": "uk",
+      "baseURL": "https://minecraft.fandom.com/",
+      "suffix": "wiki/",
+      "spriteModules": {
+        "invSprite": "Модуль:ІнвСпрайт",
+        "blockSprite": "Модуль:Спрайт/Блок"
+      },
+      "spriteModuleParams": {
+        "settingsName": "settings",
+        "sectionsName": "sections",
+        "sectionsNameKey": "name",
+        "sectionsIDKey": "id",
+        "idsName": "ids",
+        "posName": "pos",
+        "sectionName": "section",
+        "deprecatedName": null
+      }
+    }
+  ]
+}

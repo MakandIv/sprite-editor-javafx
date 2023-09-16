@@ -1,19 +1,30 @@
 package com.example.spriteeditorfx;
 
+import com.example.spriteeditorfx.model.DataModel;
+import com.example.spriteeditorfx.model.TextAreaTableCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.spriteeditorfx.SpriteParser.SETTINGS_APPLICATION;
+
 public class SpriteEditorController {
     @FXML
     private TableView<DataModel> tableView;
+    @FXML
+    public TableColumn<DataModel, Image> spriteImage;
     @FXML
     private TableColumn<DataModel, Integer> idColumn;
     @FXML
@@ -34,14 +45,22 @@ public class SpriteEditorController {
 
     public void initialize() {
         // Настройка колонок
+        spriteImage.setCellValueFactory(new PropertyValueFactory<>("spriteImage"));
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         position.setCellValueFactory(new PropertyValueFactory<>("position"));
         section.setCellValueFactory(new PropertyValueFactory<>("section"));
         russianNameColumn.setCellValueFactory(new PropertyValueFactory<>("russianName"));
         englishNameColumn.setCellValueFactory(new PropertyValueFactory<>("englishName"));
 
-        russianNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        russianNameColumn.setCellFactory(TextAreaTableCell.forTableColumn());
         russianNameColumn.setOnEditCommit(e -> e.getTableView().getItems().get(e.getTablePosition().getRow()).setRussianName(e.getNewValue()));
+
+        spriteImage.setStyle("-fx-alignment: CENTER;");
+        idColumn.setStyle("-fx-alignment: CENTER-LEFT;");
+        position.setStyle("-fx-alignment: CENTER-LEFT;");
+        section.setStyle("-fx-alignment: CENTER-LEFT;");
+        russianNameColumn.setStyle("-fx-alignment: CENTER-LEFT;");
+        englishNameColumn.setStyle("-fx-alignment: CENTER-LEFT;");
 
         saveButton.setOnAction(actionEvent -> {
             if (sectionEditorButton.isSelected()) {
@@ -73,8 +92,8 @@ public class SpriteEditorController {
     private ObservableList<DataModel> getSectionData() {
         ObservableList<DataModel> data = FXCollections.observableArrayList();
 
-        List<Map<String, String>> sectionsEN = SpriteEditorApplication.getSectionsEN();
-        List<Map<String, String>> sectionsRU = SpriteEditorApplication.getSectionsRU();
+        List<Map<String, String>> sectionsEN = SpriteEditorApplication.getSectionsSource();
+        List<Map<String, String>> sectionsRU = SpriteEditorApplication.getSectionsTarget();
 
         for (Map<String, String> sectionEN : sectionsEN) {
             DataModel dataModel = new DataModel(Integer.parseInt(sectionEN.get("id")), "", sectionEN.get("name"));
@@ -92,8 +111,8 @@ public class SpriteEditorController {
     private ObservableList<DataModel> getSpriteData() {
         ObservableList<DataModel> data = FXCollections.observableArrayList();
 
-        List<Map<String, String>> spritesEN = SpriteEditorApplication.getSpritesEN();
-        List<Map<String, String>> spritesRU = SpriteEditorApplication.getSpritesRU();
+        List<Map<String, String>> spritesEN = SpriteEditorApplication.getSpritesSource();
+        List<Map<String, String>> spritesRU = SpriteEditorApplication.getSpritesTarget();
 
         ArrayList<String> positionsEN = new ArrayList<>();
 
@@ -115,7 +134,7 @@ public class SpriteEditorController {
                 }
             }
             if (isExistEN) {
-                dataModel.setEnglishName(dataModel.getEnglishName() + "|" + (spriteEN.get("deprecated").equals("true") ? "!" : "") + spriteEN.get("name"));
+                dataModel.setEnglishName(dataModel.getEnglishName() + "\n" + (spriteEN.get("deprecated").equals("true") ? "!" : "") + spriteEN.get("name"));
             } else {
                 positionsEN.add(spriteEN.get("pos"));
                 dataModel = new DataModel(Integer.parseInt(spriteEN.get("pos")), "", spriteEN.get("name"), Integer.parseInt(spriteEN.get("section")));
@@ -126,7 +145,7 @@ public class SpriteEditorController {
             for (Map<String, String> spriteRU : spritesRU) {
                 if (String.valueOf(dm.getPosition()).equals(spriteRU.get("pos"))) {
                     if (!dm.getRussianName().equals(""))
-                        dm.setRussianName(dm.getRussianName() + "|" + (spriteRU.get("deprecated").equals("true") ? "!" : "") + spriteRU.get("name"));
+                        dm.setRussianName(dm.getRussianName() + "\n" + (spriteRU.get("deprecated").equals("true") ? "!" : "") + spriteRU.get("name"));
                     else
                         dm.setRussianName((spriteRU.get("deprecated").equals("true") ? "!" : "") + spriteRU.get("name"));
                 }
@@ -136,6 +155,13 @@ public class SpriteEditorController {
     }
 
     private void saveData(List<DataModel> sectionTableData, List<DataModel> spritesTableData) {
-        SpriteFormer.generateSpriteList(sectionTableData, spritesTableData);
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialFileName(SETTINGS_APPLICATION.get("targetPage").toString());
+        fileChooser.setTitle("Save File");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
+        File file = fileChooser.showSaveDialog(tableView.getScene().getWindow());
+        fileChooser.setInitialDirectory(file.getParentFile());
+
+        SpriteFormer.generateSpriteList(sectionTableData, spritesTableData, file);
     }
 }
