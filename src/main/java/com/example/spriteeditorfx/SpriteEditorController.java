@@ -3,18 +3,17 @@ package com.example.spriteeditorfx;
 import com.example.spriteeditorfx.model.DataModel;
 import com.example.spriteeditorfx.model.Sprite;
 import com.example.spriteeditorfx.model.TextAreaTableCell;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -38,10 +37,15 @@ public class SpriteEditorController {
     @FXML
     private Button saveButton;
     @FXML
-    public ToggleButton sectionEditorButton;
+    private ToggleButton sectionEditorButton;
+    @FXML
+    private TextField search;
 
     private ObservableList<DataModel> sectionsTableData = getSectionData();
     private ObservableList<DataModel> spritesTableData = getSpriteData();
+
+    private boolean isFiltered = false;
+    private String filter = "";
 
     public void initialize() {
         // Настройка колонок
@@ -66,17 +70,24 @@ public class SpriteEditorController {
             if (sectionEditorButton.isSelected()) {
                 sectionsTableData = tableView.getItems();
             } else {
-                spritesTableData = tableView.getItems();
+                tempSavingSpriteTableData();
             }
             saveData(sectionsTableData, spritesTableData);
         });
         sectionEditorButton.setOnAction(actionEvent -> {
             if (sectionEditorButton.isSelected()) {
-                spritesTableData = tableView.getItems();
+
+                tempSavingSpriteTableData();
+
                 spriteImage.setVisible(false);
                 idColumn.setVisible(true);
                 position.setVisible(false);
                 section.setVisible(false);
+
+                search.textProperty().removeListener(this::searchChangeListener);
+                search.setText("");
+                search.setDisable(true);
+
                 tableView.setItems(sectionsTableData != null ? sectionsTableData : getSectionData());
             } else {
                 sectionsTableData = tableView.getItems();
@@ -84,11 +95,28 @@ public class SpriteEditorController {
                 idColumn.setVisible(false);
                 position.setVisible(true);
                 section.setVisible(true);
-                tableView.setItems(spritesTableData != null ? spritesTableData : getSpriteData());
+
+                search.textProperty().addListener(this::searchChangeListener);
+                search.setDisable(false);
+
+                tableView.setItems(getSpriteData());
             }
         });
-        tableView.setEditable(true);
+
+        search.textProperty().addListener(this::searchChangeListener);
+
         tableView.setItems(getSpriteData());
+
+    }
+
+    private void tempSavingSpriteTableData() {
+        if (isFiltered) {
+            spritesTableData = FXCollections.observableArrayList(spritesTableData.stream().filter(dataModel -> !dataModel.getRussianName().toLowerCase().contains(filter.toLowerCase()) && !dataModel.getEnglishName().toLowerCase().contains(filter.toLowerCase())).toList());
+            spritesTableData.addAll(tableView.getItems());
+            spritesTableData = FXCollections.observableArrayList(spritesTableData.stream().sorted(Comparator.comparing(DataModel::getRussianName)).toList());
+        } else {
+            spritesTableData = FXCollections.observableArrayList(tableView.getItems().stream().sorted(Comparator.comparing(DataModel::getRussianName)).toList());
+        }
     }
 
     private ObservableList<DataModel> getSectionData() {
@@ -166,5 +194,15 @@ public class SpriteEditorController {
         fileChooser.setInitialDirectory(file.getParentFile());
 
         SpriteFormer.generateSpriteList(sectionTableData, spritesTableData, file);
+    }
+
+    private void searchChangeListener(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+        isFiltered = !newValue.equals("");
+        filter = newValue;
+        if (spritesTableData != null) {
+            tableView.setItems(FXCollections.observableArrayList(spritesTableData.stream().filter(dataModel -> dataModel.getRussianName().toLowerCase().contains(newValue.toLowerCase()) || dataModel.getEnglishName().toLowerCase().contains(newValue.toLowerCase())).toList()));
+        } else {
+            tableView.setItems(FXCollections.observableArrayList(SpriteEditorController.this.getSpriteData().stream().filter(dataModel -> dataModel.getRussianName().toLowerCase().contains(newValue.toLowerCase()) || dataModel.getEnglishName().toLowerCase().contains(newValue.toLowerCase())).toList()));
+        }
     }
 }

@@ -9,11 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8ea20e4-ab89-424a-a23b-56f96ba4d0bd" name="Changes" comment="Added sprite images.">
+    <list default="true" id="b8ea20e4-ab89-424a-a23b-56f96ba4d0bd" name="Changes" comment="optimization)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/SpriteEditorApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/SpriteEditorApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/SpriteParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/SpriteParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/model/Sprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/model/Sprite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/SpriteEditorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/SpriteEditorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/spriteeditorfx/sprite-editor-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/spriteeditorfx/sprite-editor-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,18 +39,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;F:/Projects/JavaProjects/SpriteEditorFX&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.JavaFX&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "extract.method.default.visibility": "private",
+    "last_opened_file_path": "F:/Projects/JavaProjects/SpriteEditorFX",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.JavaFX"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.example.spriteeditorfx" />
@@ -113,7 +113,8 @@
       <workItem from="1690722012142" duration="11539000" />
       <workItem from="1690792989395" duration="14705000" />
       <workItem from="1694945783526" duration="4560000" />
-      <workItem from="1694955819343" duration="2770000" />
+      <workItem from="1694955819343" duration="7280000" />
+      <workItem from="1694968017692" duration="3326000" />
     </task>
     <task id="LOCAL-00001" summary="Update .gitignore, partial adaptation to various sprites and languages, META-INF">
       <created>1694876990189</created>
@@ -143,7 +144,14 @@
       <option name="project" value="LOCAL" />
       <updated>1694950286836</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="optimization)">
+      <created>1694959070036</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1694959070036</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -151,7 +159,8 @@
     <MESSAGE value="Update .gitignore, partial adaptation to various sprites and languages, META-INF" />
     <MESSAGE value="maven-build.yml" />
     <MESSAGE value="Added sprite images." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added sprite images." />
+    <MESSAGE value="optimization)" />
+    <option name="LAST_COMMIT_MESSAGE" value="optimization)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -160,6 +169,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/SpriteFormer.java</url>
           <line>36</line>
           <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/SpriteEditorController.java</url>
+          <line>77</line>
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

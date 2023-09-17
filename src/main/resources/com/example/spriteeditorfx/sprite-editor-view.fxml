@@ -4,23 +4,29 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox alignment="TOP_CENTER" prefHeight="781.0" prefWidth="1177.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.spriteeditorfx.SpriteEditorController">
-   <HBox alignment="CENTER">
+   <HBox alignment="CENTER" style="-fx-spacing: 15;">
       <VBox.margin>
          <Insets bottom="15.0" top="15.0" />
       </VBox.margin>
       <Button fx:id="saveButton" mnemonicParsing="false" text="Save" textAlignment="CENTER">
          <HBox.margin>
-            <Insets left="15.0" right="15.0" />
+            <Insets />
          </HBox.margin>
       </Button>
       <ToggleButton fx:id="sectionEditorButton" mnemonicParsing="false" text="Section Editor" textAlignment="CENTER" />
+      <TextField fx:id="search" promptText="Search...">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </TextField>
    </HBox>
-   <TableView fx:id="tableView" prefHeight="726.0" prefWidth="2074.0">
+   <TableView fx:id="tableView" editable="true" VBox.vgrow="ALWAYS">
       <columns>
          <TableColumn fx:id="spriteImage" prefWidth="75.0" text="Sprite" />
          <TableColumn fx:id="russianNameColumn" prefWidth="341.0" text="Russian Name" />
@@ -29,5 +35,8 @@
          <TableColumn fx:id="section" editable="false" prefWidth="75.0" text="Section" />
          <TableColumn fx:id="idColumn" editable="false" prefWidth="75.0" text="ID" visible="false" />
       </columns>
+      <columnResizePolicy>
+         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+      </columnResizePolicy>
    </TableView>
 </VBox>
