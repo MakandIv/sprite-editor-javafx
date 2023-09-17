@@ -1,6 +1,7 @@
 package com.example.spriteeditorfx;
 
 import com.example.spriteeditorfx.model.DataModel;
+import com.example.spriteeditorfx.model.Sprite;
 import com.example.spriteeditorfx.model.TextAreaTableCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,7 +11,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -24,7 +24,7 @@ public class SpriteEditorController {
     @FXML
     private TableView<DataModel> tableView;
     @FXML
-    public TableColumn<DataModel, Image> spriteImage;
+    public TableColumn<DataModel, Sprite> spriteImage;
     @FXML
     private TableColumn<DataModel, Integer> idColumn;
     @FXML
@@ -73,12 +73,14 @@ public class SpriteEditorController {
         sectionEditorButton.setOnAction(actionEvent -> {
             if (sectionEditorButton.isSelected()) {
                 spritesTableData = tableView.getItems();
+                spriteImage.setVisible(false);
                 idColumn.setVisible(true);
                 position.setVisible(false);
                 section.setVisible(false);
                 tableView.setItems(sectionsTableData != null ? sectionsTableData : getSectionData());
             } else {
                 sectionsTableData = tableView.getItems();
+                spriteImage.setVisible(true);
                 idColumn.setVisible(false);
                 position.setVisible(true);
                 section.setVisible(true);
@@ -138,6 +140,7 @@ public class SpriteEditorController {
             } else {
                 positionsEN.add(spriteEN.get("pos"));
                 dataModel = new DataModel(Integer.parseInt(spriteEN.get("pos")), "", spriteEN.get("name"), Integer.parseInt(spriteEN.get("section")));
+                dataModel.setSpriteImage(new Sprite(SpriteEditorApplication.getSpriteImageSource(), dataModel.getPosition()));
                 data.add(dataModel);
             }
         }

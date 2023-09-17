@@ -3,6 +3,7 @@ package com.example.spriteeditorfx;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
 
@@ -23,6 +24,7 @@ public class SpriteEditorApplication extends Application {
     private static List<Map<String, String>> spritesTarget;
     private static List<Map<String, String>> spritesSource;
     private static String settingsTarget;
+    private static Image spriteImageSource;
 
     public static String getSettingsTarget() {
         return settingsTarget;
@@ -80,6 +82,13 @@ public class SpriteEditorApplication extends Application {
         SpriteEditorApplication.spritesSource = spritesEN;
     }
 
+    public static Image getSpriteImageSource() {
+        return spriteImageSource;
+    }
+
+    public static void setSpriteImageSource(Image spriteImageSource) {
+        SpriteEditorApplication.spriteImageSource = spriteImageSource;
+    }
 
     @Override
     public void init() throws Exception {
@@ -102,7 +111,7 @@ public class SpriteEditorApplication extends Application {
         setSectionsSource(sectionParser(Objects.requireNonNull(getSourceData()), (JSONObject) INV_SPRITE_SOURCE.get("spriteModuleParams")));
         setSpritesTarget(spriteParser(getTargetData(), (JSONObject) INV_SPRITE_TARGET.get("spriteModuleParams")));
         setSpritesSource(spriteParser(getSourceData(), (JSONObject) INV_SPRITE_SOURCE.get("spriteModuleParams")));
-
+        setSpriteImageSource(getSpriteFile(SETTINGS_APPLICATION.get("sourceFile").toString()));
         super.init();
     }
 

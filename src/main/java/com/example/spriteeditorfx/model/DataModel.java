@@ -4,11 +4,10 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.image.Image;
 
 public class DataModel {
 
-    private Image spriteImage;
+    private Sprite spriteImage;
     private IntegerProperty id;
     private StringProperty russianName;
     private StringProperty englishName;
@@ -32,11 +31,11 @@ public class DataModel {
 
     }
 
-    public Image getSpriteImage() {
+    public Sprite getSpriteImage() {
         return spriteImage;
     }
 
-    public void setSpriteImage(Image spriteImage) {
+    public void setSpriteImage(Sprite spriteImage) {
         this.spriteImage = spriteImage;
     }
 
