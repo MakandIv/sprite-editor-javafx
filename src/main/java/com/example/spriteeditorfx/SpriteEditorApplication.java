@@ -111,7 +111,7 @@ public class SpriteEditorApplication extends Application {
         setSectionsSource(sectionParser(Objects.requireNonNull(getSourceData()), (JSONObject) INV_SPRITE_SOURCE.get("spriteModuleParams")));
         setSpritesTarget(spriteParser(getTargetData(), (JSONObject) INV_SPRITE_TARGET.get("spriteModuleParams")));
         setSpritesSource(spriteParser(getSourceData(), (JSONObject) INV_SPRITE_SOURCE.get("spriteModuleParams")));
-        setSpriteImageSource(getSpriteFile(SETTINGS_APPLICATION.get("sourceFile").toString()));
+        setSpriteImageSource(new Image(SETTINGS_APPLICATION.get("sourceFile").toString()));
         super.init();
     }
 

@@ -9,19 +9,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8ea20e4-ab89-424a-a23b-56f96ba4d0bd" name="Changes" comment="maven-build.yml">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/model/Sprite.java" afterDir="false" />
+    <list default="true" id="b8ea20e4-ab89-424a-a23b-56f96ba4d0bd" name="Changes" comment="Added sprite images.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/SpriteEditorApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/SpriteEditorApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/SpriteEditorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/SpriteEditorController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/SpriteParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/SpriteParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/model/DataModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/model/DataModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/spritesEditorConfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/spritesEditorConfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/model/Sprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/model/Sprite.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -112,7 +112,8 @@
       <workItem from="1690653907121" duration="3413000" />
       <workItem from="1690722012142" duration="11539000" />
       <workItem from="1690792989395" duration="14705000" />
-      <workItem from="1694945783526" duration="4222000" />
+      <workItem from="1694945783526" duration="4560000" />
+      <workItem from="1694955819343" duration="2770000" />
     </task>
     <task id="LOCAL-00001" summary="Update .gitignore, partial adaptation to various sprites and languages, META-INF">
       <created>1694876990189</created>
@@ -135,14 +136,22 @@
       <option name="project" value="LOCAL" />
       <updated>1694877906375</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Added sprite images.">
+      <created>1694950286836</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1694950286836</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Init" />
     <MESSAGE value="Update .gitignore, partial adaptation to various sprites and languages, META-INF" />
     <MESSAGE value="maven-build.yml" />
-    <option name="LAST_COMMIT_MESSAGE" value="maven-build.yml" />
+    <MESSAGE value="Added sprite images." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added sprite images." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -152,13 +161,13 @@
           <line>36</line>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/spriteeditorfx/model/Sprite.java</url>
-          <line>23</line>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="com.example.spriteeditorfx.model.DataModel" memberName="spriteImage" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

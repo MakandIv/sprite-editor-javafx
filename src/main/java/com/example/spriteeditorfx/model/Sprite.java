@@ -15,22 +15,14 @@ public class Sprite extends ImageView {
     }
 
     private void getSprite(Image image, int position, int spriteWidth, int spriteHeight) {
-        int spriteInRow = (int) Math.round(Math.ceil(image.getWidth() / spriteWidth));
-        int spriteInColumn = (int) Math.round(Math.ceil(image.getHeight() / spriteHeight));
-        int numberCells = spriteInRow * spriteInColumn;
-
-        Rectangle2D[] cellClips = new Rectangle2D[numberCells];
-        for (int i = 0; i < spriteInColumn; i++) {
-            for (int j = 0; j < spriteInRow; j++) {
-                cellClips[i * spriteInRow + j] = new Rectangle2D(
-                        j * spriteWidth, i * spriteHeight,
-                        spriteWidth, spriteHeight
-                );
-            }
-        }
-
         setImage(image);
-        setViewport(cellClips[position - 1]);
+
+        int spriteInRow = (int) image.getWidth() / spriteWidth;
+
+        int numberRow = (position - 1) / spriteInRow;
+        int numberColumn = (position - 1) % spriteInRow;
+
+        setViewport(new Rectangle2D(numberColumn * spriteWidth, numberRow * spriteHeight, spriteWidth, spriteHeight));
     }
 
 }

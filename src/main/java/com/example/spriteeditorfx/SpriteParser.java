@@ -1,6 +1,5 @@
 package com.example.spriteeditorfx;
 
-import javafx.scene.image.Image;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -146,7 +145,7 @@ public class SpriteParser {
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             int responseCode = connection.getResponseCode();
-            if (responseCode == HttpsURLConnection.HTTP_OK) { // success
+            if (responseCode == HttpsURLConnection.HTTP_OK) {
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String inputLine;
                 StringBuilder response = new StringBuilder();
@@ -162,9 +161,5 @@ public class SpriteParser {
             throw new RuntimeException(e);
         }
         return null;
-    }
-
-    public static Image getSpriteFile(String url) {
-        return new Image(url);
     }
 }
