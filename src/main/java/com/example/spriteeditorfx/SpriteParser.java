@@ -7,8 +7,8 @@ import org.json.simple.parser.ParseException;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -19,17 +19,37 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class SpriteParser {
 
     public static JSONObject SETTINGS_APPLICATION;
 
     static {
-        try (FileReader fileReader = new FileReader("src/main/resources/spritesEditorConfig.json")) {
-            SETTINGS_APPLICATION = (JSONObject) new JSONParser().parse(fileReader);
+        try (InputStream inputStream = SpriteParser.class.getClassLoader().getResourceAsStream("spritesEditorConfig.json")) {
+            String text;
+            if (inputStream != null) {
+                text = new BufferedReader(
+                        new InputStreamReader(inputStream, StandardCharsets.UTF_8))
+                        .lines()
+                        .collect(Collectors.joining("\n"));
+            } else {
+                throw new RuntimeException();
+            }
+            SETTINGS_APPLICATION = (JSONObject) new JSONParser().parse(text);
+
         } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
+
+
+//        File resourceURL = new File(Objects.requireNonNull(SpriteParser.class.getClassLoader().getResource("spritesEditorConfig.json")).getFile());
+//
+//        try (FileReader fileReader = new FileReader(resourceURL)) {
+//            SETTINGS_APPLICATION = (JSONObject) new JSONParser().parse(fileReader);
+//        } catch (IOException | ParseException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     public static JSONObject INV_SPRITE_TARGET;
