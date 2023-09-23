@@ -17,7 +17,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import static com.example.spriteeditorfx.SpriteParser.SETTINGS_APPLICATION;
+import static com.example.spriteeditorfx.SpriteParser.*;
 
 public class SpriteEditorController {
     @FXML
@@ -27,9 +27,9 @@ public class SpriteEditorController {
     @FXML
     private TableColumn<DataModel, Integer> idColumn;
     @FXML
-    private TableColumn<DataModel, String> russianNameColumn;
+    private TableColumn<DataModel, String> targetNameColumn;
     @FXML
-    private TableColumn<DataModel, String> englishNameColumn;
+    private TableColumn<DataModel, String> sourceNameColumn;
     @FXML
     private TableColumn<DataModel, Integer> position;
     @FXML
@@ -53,18 +53,21 @@ public class SpriteEditorController {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         position.setCellValueFactory(new PropertyValueFactory<>("position"));
         section.setCellValueFactory(new PropertyValueFactory<>("section"));
-        russianNameColumn.setCellValueFactory(new PropertyValueFactory<>("russianName"));
-        englishNameColumn.setCellValueFactory(new PropertyValueFactory<>("englishName"));
+        targetNameColumn.setCellValueFactory(new PropertyValueFactory<>("targetName"));
+        sourceNameColumn.setCellValueFactory(new PropertyValueFactory<>("sourceName"));
 
-        russianNameColumn.setCellFactory(TextAreaTableCell.forTableColumn());
-        russianNameColumn.setOnEditCommit(e -> e.getTableView().getItems().get(e.getTablePosition().getRow()).setRussianName(e.getNewValue()));
+        targetNameColumn.setCellFactory(TextAreaTableCell.forTableColumn());
+        targetNameColumn.setOnEditCommit(e -> e.getTableView().getItems().get(e.getTablePosition().getRow()).setTargetName(e.getNewValue()));
 
         spriteImage.setStyle("-fx-alignment: CENTER;");
         idColumn.setStyle("-fx-alignment: CENTER-LEFT;");
         position.setStyle("-fx-alignment: CENTER-LEFT;");
         section.setStyle("-fx-alignment: CENTER-LEFT;");
-        russianNameColumn.setStyle("-fx-alignment: CENTER-LEFT;");
-        englishNameColumn.setStyle("-fx-alignment: CENTER-LEFT;");
+        targetNameColumn.setStyle("-fx-alignment: CENTER-LEFT;");
+        sourceNameColumn.setStyle("-fx-alignment: CENTER-LEFT;");
+
+        targetNameColumn.setText(INV_SPRITE_TARGET.get("fullLangName").toString() + " Name");
+        sourceNameColumn.setText(INV_SPRITE_SOURCE.get("fullLangName").toString() + " Name");
 
         saveButton.setOnAction(actionEvent -> {
             if (sectionEditorButton.isSelected()) {
@@ -111,11 +114,11 @@ public class SpriteEditorController {
 
     private void tempSavingSpriteTableData() {
         if (isFiltered) {
-            spritesTableData = FXCollections.observableArrayList(spritesTableData.stream().filter(dataModel -> !dataModel.getRussianName().toLowerCase().contains(filter.toLowerCase()) && !dataModel.getEnglishName().toLowerCase().contains(filter.toLowerCase())).toList());
+            spritesTableData = FXCollections.observableArrayList(spritesTableData.stream().filter(dataModel -> !dataModel.getTargetName().toLowerCase().contains(filter.toLowerCase()) && !dataModel.getSourceName().toLowerCase().contains(filter.toLowerCase())).toList());
             spritesTableData.addAll(tableView.getItems());
-            spritesTableData = FXCollections.observableArrayList(spritesTableData.stream().sorted(Comparator.comparing(DataModel::getRussianName)).toList());
+            spritesTableData = FXCollections.observableArrayList(spritesTableData.stream().sorted(Comparator.comparing(DataModel::getTargetName)).toList());
         } else {
-            spritesTableData = FXCollections.observableArrayList(tableView.getItems().stream().sorted(Comparator.comparing(DataModel::getRussianName)).toList());
+            spritesTableData = FXCollections.observableArrayList(tableView.getItems().stream().sorted(Comparator.comparing(DataModel::getTargetName)).toList());
         }
     }
 
@@ -129,7 +132,7 @@ public class SpriteEditorController {
             DataModel dataModel = new DataModel(Integer.parseInt(sectionEN.get("id")), "", sectionEN.get("name"));
             for (Map<String, String> sectionRU : sectionsRU) {
                 if (String.valueOf(dataModel.getId()).equals(sectionRU.get("id"))) {
-                    dataModel.setRussianName(sectionRU.get("name"));
+                    dataModel.setTargetName(sectionRU.get("name"));
                 }
             }
             data.add(dataModel);
@@ -164,7 +167,7 @@ public class SpriteEditorController {
                 }
             }
             if (isExistEN) {
-                dataModel.setEnglishName(dataModel.getEnglishName() + "\n" + (spriteEN.get("deprecated").equals("true") ? "!" : "") + spriteEN.get("name"));
+                dataModel.setSourceName(dataModel.getSourceName() + "\n" + (spriteEN.get("deprecated").equals("true") ? "!" : "") + spriteEN.get("name"));
             } else {
                 positionsEN.add(spriteEN.get("pos"));
                 dataModel = new DataModel(Integer.parseInt(spriteEN.get("pos")), "", spriteEN.get("name"), Integer.parseInt(spriteEN.get("section")));
@@ -175,10 +178,10 @@ public class SpriteEditorController {
         for (DataModel dm : data) {
             for (Map<String, String> spriteRU : spritesRU) {
                 if (String.valueOf(dm.getPosition()).equals(spriteRU.get("pos"))) {
-                    if (!dm.getRussianName().equals(""))
-                        dm.setRussianName(dm.getRussianName() + "\n" + (spriteRU.get("deprecated").equals("true") ? "!" : "") + spriteRU.get("name"));
+                    if (!dm.getTargetName().equals(""))
+                        dm.setTargetName(dm.getTargetName() + "\n" + (spriteRU.get("deprecated").equals("true") ? "!" : "") + spriteRU.get("name"));
                     else
-                        dm.setRussianName((spriteRU.get("deprecated").equals("true") ? "!" : "") + spriteRU.get("name"));
+                        dm.setTargetName((spriteRU.get("deprecated").equals("true") ? "!" : "") + spriteRU.get("name"));
                 }
             }
         }
@@ -200,9 +203,9 @@ public class SpriteEditorController {
         isFiltered = !newValue.equals("");
         filter = newValue;
         if (spritesTableData != null) {
-            tableView.setItems(FXCollections.observableArrayList(spritesTableData.stream().filter(dataModel -> dataModel.getRussianName().toLowerCase().contains(newValue.toLowerCase()) || dataModel.getEnglishName().toLowerCase().contains(newValue.toLowerCase())).toList()));
+            tableView.setItems(FXCollections.observableArrayList(spritesTableData.stream().filter(dataModel -> dataModel.getTargetName().toLowerCase().contains(newValue.toLowerCase()) || dataModel.getSourceName().toLowerCase().contains(newValue.toLowerCase())).toList()));
         } else {
-            tableView.setItems(FXCollections.observableArrayList(SpriteEditorController.this.getSpriteData().stream().filter(dataModel -> dataModel.getRussianName().toLowerCase().contains(newValue.toLowerCase()) || dataModel.getEnglishName().toLowerCase().contains(newValue.toLowerCase())).toList()));
+            tableView.setItems(FXCollections.observableArrayList(SpriteEditorController.this.getSpriteData().stream().filter(dataModel -> dataModel.getTargetName().toLowerCase().contains(newValue.toLowerCase()) || dataModel.getSourceName().toLowerCase().contains(newValue.toLowerCase())).toList()));
         }
     }
 }

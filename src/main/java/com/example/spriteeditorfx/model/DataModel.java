@@ -9,21 +9,21 @@ public class DataModel {
 
     private Sprite spriteImage;
     private IntegerProperty id;
-    private StringProperty russianName;
-    private StringProperty englishName;
+    private StringProperty targetName;
+    private StringProperty sourceName;
     private IntegerProperty section;
     private IntegerProperty position;
 
-    public DataModel(Integer id, String russianName, String englishName) {
+    public DataModel(Integer id, String targetName, String sourceName) {
         this.id = new SimpleIntegerProperty(id);
-        this.russianName = new SimpleStringProperty(russianName);
-        this.englishName = new SimpleStringProperty(englishName);
+        this.targetName = new SimpleStringProperty(targetName);
+        this.sourceName = new SimpleStringProperty(sourceName);
     }
 
-    public DataModel(Integer position, String russianName, String englishName, Integer section) {
+    public DataModel(Integer position, String targetName, String sourceName, Integer section) {
         this.position = new SimpleIntegerProperty(position);
-        this.russianName = new SimpleStringProperty(russianName);
-        this.englishName = new SimpleStringProperty(englishName);
+        this.targetName = new SimpleStringProperty(targetName);
+        this.sourceName = new SimpleStringProperty(sourceName);
         this.section = new SimpleIntegerProperty(section);
     }
 
@@ -47,20 +47,20 @@ public class DataModel {
         this.id.set(id);
     }
 
-    public String getRussianName() {
-        return russianName.get();
+    public String getTargetName() {
+        return targetName.get();
     }
 
-    public void setRussianName(String russianName) {
-        this.russianName.set(russianName);
+    public void setTargetName(String targetName) {
+        this.targetName.set(targetName);
     }
 
-    public String getEnglishName() {
-        return englishName.get();
+    public String getSourceName() {
+        return sourceName.get();
     }
 
-    public void setEnglishName(String englishName) {
-        this.englishName.set(englishName);
+    public void setSourceName(String sourceName) {
+        this.sourceName.set(sourceName);
     }
 
     public int getSection() {

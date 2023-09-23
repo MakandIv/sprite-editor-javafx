@@ -30,56 +30,56 @@ public class SpriteEditorApplication extends Application {
         return settingsTarget;
     }
 
-    public static void setSettingsTarget(String settingsRU) {
-        SpriteEditorApplication.settingsTarget = settingsRU;
+    public static void setSettingsTarget(String settingsTarget) {
+        SpriteEditorApplication.settingsTarget = settingsTarget;
     }
 
     public static String getTargetData() {
         return targetData;
     }
 
-    public static void setTargetData(String ruData) {
-        SpriteEditorApplication.targetData = ruData;
+    public static void setTargetData(String targetData) {
+        SpriteEditorApplication.targetData = targetData;
     }
 
     public static String getSourceData() {
         return sourceData;
     }
 
-    public static void setSourceData(String enData) {
-        SpriteEditorApplication.sourceData = enData;
+    public static void setSourceData(String sourceData) {
+        SpriteEditorApplication.sourceData = sourceData;
     }
 
     public static List<Map<String, String>> getSectionsTarget() {
         return sectionsTarget;
     }
 
-    public static void setSectionsTarget(List<Map<String, String>> sectionsRU) {
-        SpriteEditorApplication.sectionsTarget = sectionsRU;
+    public static void setSectionsTarget(List<Map<String, String>> sectionsTarget) {
+        SpriteEditorApplication.sectionsTarget = sectionsTarget;
     }
 
     public static List<Map<String, String>> getSectionsSource() {
         return sectionsSource;
     }
 
-    public static void setSectionsSource(List<Map<String, String>> sectionsEN) {
-        SpriteEditorApplication.sectionsSource = sectionsEN;
+    public static void setSectionsSource(List<Map<String, String>> sectionsSource) {
+        SpriteEditorApplication.sectionsSource = sectionsSource;
     }
 
     public static List<Map<String, String>> getSpritesTarget() {
         return spritesTarget;
     }
 
-    public static void setSpritesTarget(List<Map<String, String>> spritesRU) {
-        SpriteEditorApplication.spritesTarget = spritesRU;
+    public static void setSpritesTarget(List<Map<String, String>> spritesTarget) {
+        SpriteEditorApplication.spritesTarget = spritesTarget;
     }
 
     public static List<Map<String, String>> getSpritesSource() {
         return spritesSource;
     }
 
-    public static void setSpritesSource(List<Map<String, String>> spritesEN) {
-        SpriteEditorApplication.spritesSource = spritesEN;
+    public static void setSpritesSource(List<Map<String, String>> spritesSource) {
+        SpriteEditorApplication.spritesSource = spritesSource;
     }
 
     public static Image getSpriteImageSource() {

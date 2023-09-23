@@ -41,15 +41,6 @@ public class SpriteParser {
         } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
-
-
-//        File resourceURL = new File(Objects.requireNonNull(SpriteParser.class.getClassLoader().getResource("spritesEditorConfig.json")).getFile());
-//
-//        try (FileReader fileReader = new FileReader(resourceURL)) {
-//            SETTINGS_APPLICATION = (JSONObject) new JSONParser().parse(fileReader);
-//        } catch (IOException | ParseException e) {
-//            throw new RuntimeException(e);
-//        }
     }
 
     public static JSONObject INV_SPRITE_TARGET;
@@ -80,7 +71,7 @@ public class SpriteParser {
             }
             if (spriteFlag) {
                 Map<String, String> spriteMap = new HashMap<>();
-                Pattern spritePattern = Pattern.compile("([^\\t\\[\\]]*?|\\['(.*?)'])\\s*?=\\s*?\\{\\s*?"
+                Pattern spritePattern = Pattern.compile("([^\\t\\[\\]]*?|\\[['\"](.*?)['\"]])\\s*?=\\s*?\\{\\s*?"
                         + spriteModuleParams.get("posName").toString().replace("[", "\\[")
                         + "\\s*?=\\s*?(\\d*?)\\s*?,\\s*?"
                         + spriteModuleParams.get("sectionName").toString().replace("[", "\\[")

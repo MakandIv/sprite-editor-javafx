@@ -29,8 +29,8 @@
    <TableView fx:id="tableView" editable="true" VBox.vgrow="ALWAYS">
       <columns>
          <TableColumn fx:id="spriteImage" prefWidth="75.0" text="Sprite" />
-         <TableColumn fx:id="russianNameColumn" prefWidth="341.0" text="Russian Name" />
-         <TableColumn fx:id="englishNameColumn" editable="false" minWidth="0.0" prefWidth="339.0" text="English Name" />
+         <TableColumn fx:id="targetNameColumn" prefWidth="341.0" text="Target Name" />
+         <TableColumn fx:id="sourceNameColumn" editable="false" minWidth="0.0" prefWidth="339.0" text="Source Name" />
          <TableColumn fx:id="position" editable="false" text="Position" />
          <TableColumn fx:id="section" editable="false" prefWidth="75.0" text="Section" />
          <TableColumn fx:id="idColumn" editable="false" prefWidth="75.0" text="ID" visible="false" />
